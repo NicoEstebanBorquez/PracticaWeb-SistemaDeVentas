@@ -21,6 +21,7 @@ public class Controlador extends HttpServlet {
      */
     Empleado em = new Empleado();
     EmpleadoDAO edao = new EmpleadoDAO();
+    int idEmpleado;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -44,20 +45,47 @@ public class Controlador extends HttpServlet {
                     String nom = request.getParameter("txtNombres");
                     String tel = request.getParameter("txtTel");
                     String est = request.getParameter("txtEstado");
-                    String user = request.getParameter("txtUser");
-                  
+                    String user = request.getParameter("txtUsuario");
                     em.setDni(dni);
                     em.setNom(nom);
                     em.setTel(tel);
                     em.setEstado(est);
                     em.setUser(user);
                     edao.agregar(em);
+
                     request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
                     break;
-                case "Editar":
 
+                case "Editar":
+                    idEmpleado = Integer.parseInt(request.getParameter("id"));
+                    Empleado e = edao.listarId(idEmpleado);
+                    request.setAttribute("empleadoEditar", e);
+
+                    request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
                     break;
+
+                case "Actualizar":
+                    String dni1 = request.getParameter("txtDni");
+                    String nom1 = request.getParameter("txtNombres");
+                    String tel1 = request.getParameter("txtTel");
+                    String est1 = request.getParameter("txtEstado");
+                    String user1 = request.getParameter("txtUsuario");
+                    em.setDni(dni1);
+                    em.setNom(nom1);
+                    em.setTel(tel1);
+                    em.setEstado(est1);
+                    em.setUser(user1);
+                    em.setId(idEmpleado);
+
+                    edao.actualizar(em);
+
+                    request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                    break;
+
                 case "Delete":
+                    idEmpleado = Integer.parseInt(request.getParameter("id"));
+                    edao.delete(idEmpleado);
+                    request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
 
                     break;
                 default:
@@ -67,7 +95,7 @@ public class Controlador extends HttpServlet {
         }
 
         if (menu.equals("Producto")) {
-            switch (accion) {
+            /*switch (accion) {
                 case "Listar":
 
                     break;
@@ -82,11 +110,11 @@ public class Controlador extends HttpServlet {
                     break;
                 default:
                     throw new AssertionError();
-            }
+            }*/
             request.getRequestDispatcher("Producto.jsp").forward(request, response);
         }
-        if (menu.equals("Clientes")) {
-            switch (accion) {
+        if (menu.equals("Cliente")) {
+            /*switch (accion) {
                 case "Listar":
 
                     break;
@@ -101,8 +129,8 @@ public class Controlador extends HttpServlet {
                     break;
                 default:
                     throw new AssertionError();
-            }
-            request.getRequestDispatcher("Clientes.jsp").forward(request, response);
+            }*/
+            request.getRequestDispatcher("Cliente.jsp").forward(request, response);
         }
         if (menu.equals("NuevaVenta")) {
             request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);

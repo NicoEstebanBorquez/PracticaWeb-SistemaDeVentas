@@ -12,28 +12,29 @@
         <div class="d-flex">
             <div class="card col-sm-4">
                 <div class="card-body">
-                    <form action="Controlador?menu=Empleado" method="post">
+                    <form action="Controlador?menu=Empleado" method="POST">
                         <div class="form-group">
                             <label>Dni</label>
-                            <input type="text" name="txtDni" class="form-control">  
+                            <input type="text" value="${empleadoEditar.getDni()}" name="txtDni" class="form-control">  
                         </div>
                         <div class="form-group">
                             <label>Nombres</label>
-                            <input type="text" name="txtNombres" class="form-control">
+                            <input type="text" value="${empleadoEditar.getNom()}" name="txtNombres" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Teléfono</label>
-                            <input type="text" name="txtTel" class="form-control">
+                            <input type="text" value="${empleadoEditar.getTel()}" name="txtTel" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Estado</label>
-                            <input type="text" name="txtEstado" class="form-control">
+                            <input type="text" value="${empleadoEditar.getEstado()}" name="txtEstado" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Usuario</label>
-                            <input type="text" name="txtUsuario" class="form-control">
+                            <input type="text" value="${empleadoEditar.getUser()}" name="txtUsuario" class="form-control">
                         </div>
                         <input type="submit" name="accion" value="Agregar" class="btn btn-info">
+                        <input type="submit" name="accion" value="Actualizar" class="btn btn-success">
                     </form>
                 </div>    
             </div>
@@ -60,8 +61,8 @@
                                 <td>${em.getEstado()}</td>
                                 <td>${em.getUser()}</td>
                                 <td>
-                                    <a>Editar</a>
-                                    <a>Eliminar</a>
+                                    <a class="btn btn-warning" href="Controlador?menu=Empleado&accion=Editar&id=${em.getId()}">Editar</a>
+                                    <a class="btn btn-danger" href="Controlador?menu=Empleado&accion=Delete&id=${em.getId()}">Eliminar</a>
                                 </td>
                             </tr> 
                         </c:forEach>

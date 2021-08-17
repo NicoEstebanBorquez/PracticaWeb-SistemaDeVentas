@@ -75,35 +75,12 @@ public class EmpleadoDAO {
             ps.setString(3, em.getTel());
             ps.setString(4, em.getEstado());
             ps.setString(5, em.getUser());
-            r = ps.executeUpdate();
+            ps.executeUpdate();
 
         } catch (SQLException ex) {
             Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return r;
-    }
-
-    public Empleado listarId(int id) {
-        Empleado em = new Empleado();
-        String sql = "SELECT * FROM empleado WHERE idEmpleado="+id;
-
-        try {
-            con = cn.Conexion();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            
-            while (rs.next()) {
-                em.setDni(rs.getString(2));
-                em.setNom(rs.getString(3));
-                em.setTel(rs.getString(4));
-                em.setEstado(rs.getString(5));
-                em.setUser(rs.getString(6));
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return em;
     }
 
     public int actualizar(Empleado em) {
@@ -118,15 +95,40 @@ public class EmpleadoDAO {
             ps.setString(4, em.getEstado());
             ps.setString(5, em.getUser());
             ps.setInt(6, em.getId());
-            r = ps.executeUpdate();
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return r;
     }
+    public Empleado listarId(int id) {
+        String sql = "SELECT * FROM empleado WHERE idEmpleado="+id;
+        Empleado em = null;
+        
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                em = new Empleado();
+                em.setId(rs.getInt(1));
+                em.setDni(rs.getString(2));
+                em.setNom(rs.getString(3));
+                em.setTel(rs.getString(4));
+                em.setEstado(rs.getString(5));
+                em.setUser(rs.getString(6));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return em;
+    }
+
 
     public int delete(int id) {
-        String sql = "DELETE FROM empleado WHERE idEmpleado=?";
+        String sql = "DELETE FROM empleado WHERE idEmpleado="+id;
 
         try {
             con = cn.Conexion();
