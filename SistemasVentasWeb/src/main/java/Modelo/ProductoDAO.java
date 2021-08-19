@@ -15,6 +15,7 @@ public class ProductoDAO {
     ResultSet rs;
     int r;
 
+    
     public List listar() {
         String sql = "SELECT * FROM producto";
         List<Producto> lista = new ArrayList<>();
@@ -68,7 +69,7 @@ public class ProductoDAO {
             ps.setDouble(2, producto.getPrecio());
             ps.setInt(3, producto.getStock());
             ps.setString(4, producto.getEstado());
-            ps.setInt(6, producto.getIdProducto());
+            ps.setInt(5, producto.getIdProducto());
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null, ex);

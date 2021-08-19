@@ -15,6 +15,26 @@ public class ClienteDAO {
     ResultSet rs;
     int r;
 
+    public Cliente buscar(String dni) {
+        Cliente cliente = new Cliente();
+        String sql = "SELECT * FROM cliente WHERE Dni=" + dni;
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                cliente.setIdCliente(rs.getInt(1));
+                cliente.setDni(rs.getString(2));
+                cliente.setNombres(rs.getString(3));
+                cliente.setDireccion(rs.getString(4));
+                cliente.setEstado(rs.getString(5));
+            }
+        } catch (Exception e) {
+        }
+        return cliente;
+    }
+
     public List listar() {
         String sql = "SELECT * FROM cliente";
         List<Cliente> lista = new ArrayList<>();
